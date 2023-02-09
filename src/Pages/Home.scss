@@ -80,3 +80,24 @@
 		}
 	}
 }
+
+.Mobile {
+	.StartupScreen {
+		.ProfilePicker {
+			position: absolute;
+			transform: translateY(-100px);
+		}
+
+		.Avatar {
+			transform: none;
+		}
+
+		.ProfileUsername {
+			align-items: center;
+
+			.Input {
+				width: 50% !important;
+			}
+		}
+	}
+}

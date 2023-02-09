@@ -3,9 +3,9 @@ import { useState } from "react";
 import "./App.scss";
 import background from "./Assets/background.jpg";
 import "./city-fog-theme.css";
-import { ActionTypes, getRandomKey } from "./Classes/Constants";
+import { ActionTypes, getRandomKey, joinClassNames } from "./Classes/Constants";
 import { dispatcher } from "./Classes/Dispatcher";
-import { useEventListener } from "./Classes/Hooks";
+import { useEventListener, useMediaQuery } from "./Classes/Hooks";
 import RoutesStore from "./Classes/Stores/RoutesStore";
 import TenorClient from "./Classes/TenorClient";
 import ContextMenu from "./Components/ContextMenuHandler";
@@ -61,8 +61,10 @@ if (!localUser) {
 }
 
 export default function App() {
+	const isMobile = useMediaQuery("max-width", 700);
+
 	return (
-		<div className="App">
+		<div className={joinClassNames("App", [isMobile, "Mobile"])}>
 			<BackgroundImage />
 
 			<div className="Main">

@@ -75,6 +75,8 @@ function Game({ room }) {
 	const [winner, setWinner] = useState(null);
 	const [winTime, setWinTime] = useState(0);
 	const [timerInterval, setTimerInterval] = useState(null);
+	const [shuffledGifs, shuffleGifs] = useState([]);
+
 	const question = RoomStore.useState(() => RoomStore.getCurrentRoom().currentQuestion);
 	const forceUpdate = useReducer(x => x + 1, 0)[1];
 
@@ -103,6 +105,10 @@ function Game({ room }) {
 		switch (room.stage) {
 			case RoomStage.PICK_GIF: {
 				selectGif();
+			} break;
+
+			case RoomStage.VOTE_GIF: {
+				shuffleGifs(Object.entries(room.gifs).sort(() => Math.random() - 0.5));
 			} break;
 		}
 	}, [room.stage]);
@@ -172,7 +178,7 @@ function Game({ room }) {
 			) : (
 				room.stage === RoomStage.VOTE_GIF ? (
 					<div className="GifVotes FlexCenter">
-						{Object.entries(room.gifs).map(([userId, uri]) => (
+						{shuffledGifs.map(([userId, uri]) => (
 							<div className={joinClassNames("GifContainer", [userId === localUser.id, "Self"], [room.votes[userId] === userId, "Voted"], [Object.keys(room.votes).length === Object.keys(room.users).length, room.getWinner() === userId ? "Winner" : "Loser"])} key={userId} onClick={() => {
 								if (userId !== localUser.id && !room.getWinner()) {
 									writeToDatabase(userId, "rooms", room.id, "votes", localUser.id);

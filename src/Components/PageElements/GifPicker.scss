@@ -96,3 +96,25 @@
 		}
 	}
 }
+
+.Mobile .GifPicker {
+	height: 75vh;
+
+	&:not(.Open) {
+		transform: translateY(75vh);
+	}
+
+	.Items {
+		gap: 0;
+	}
+
+	.GifItemContainer {
+		width: 100vw;
+		height: unset;
+
+		img {
+			width: 100vw;
+			height: unset;
+		}
+	}
+}

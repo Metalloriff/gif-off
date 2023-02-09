@@ -1,7 +1,7 @@
 @import "../Variables.scss";
 
 .GameRoom {
-	height: 100vh;
+	min-height: 100vh;
 
 	.Avatar {
 		border-radius: 100%;
@@ -11,7 +11,7 @@
 	}
 
 	.Queue {
-		height: 100vh;
+		min-height: 100vh;
 		flex-direction: column;
 		backdrop-filter: blur(10px);
 
@@ -55,7 +55,7 @@
 
 	.Game {
 		flex-direction: column;
-		height: 100vh;
+		min-height: 100vh;
 		color: white;
 
 		.Scoreboard {
@@ -218,6 +218,40 @@
 			&:hover {
 				border-color: white;
 			}
+		}
+	}
+}
+
+.Mobile .GameRoom {
+
+	.Scoreboard {
+		top: 15px;
+		left: 15px;
+
+		.Username, h4 {
+			display: none;
+		}
+
+		.Items {
+			gap: 10px;
+		}
+	}
+
+	.Question {
+		font-size: 0.8em;
+	}
+
+	.Status {
+		font-size: 0.6em;
+		top: 15vh;
+	}
+
+	.GifVotes {
+		padding: 0;
+		margin-top: 20vh;
+		
+		.Gif {
+			max-width: 80vw;
 		}
 	}
 }
