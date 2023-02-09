@@ -1,0 +1,223 @@
+@import "../Variables.scss";
+
+.GameRoom {
+	height: 100vh;
+
+	.Avatar {
+		border-radius: 100%;
+
+		width: 40px;
+		height: 40px;
+	}
+
+	.Queue {
+		height: 100vh;
+		flex-direction: column;
+		backdrop-filter: blur(10px);
+
+		.GameDetails {
+			position: absolute;
+			top: 10vh;
+			gap: 20px;
+
+			.Avatar {
+				width: 100px;
+				height: 100px;	
+			}
+
+			.Title {
+				font-weight: bold;
+				font-size: 1.2em;
+			}
+		}
+
+		.Users {
+			flex-direction: column;
+			gap: 15px;
+
+			.UsersTitle {
+				padding: 10px 30px;
+				border-bottom: 2px solid;
+				font-weight: 400;
+			}
+
+			.Username {
+				margin-left: 10px;
+				text-shadow: 0 0 10px black;
+			}
+		}
+
+		.Button {
+			position: absolute;
+			bottom: 10vh;
+		}
+	}
+
+	.Game {
+		flex-direction: column;
+		height: 100vh;
+		color: white;
+
+		.Scoreboard {
+			position: absolute;
+			left: 20px;
+			flex-direction: column;
+			pointer-events: none;
+
+			.Items {
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 20px;
+			}
+
+			&:hover {
+				.Username {
+					opacity: 1;
+				}
+			}
+
+			.AvatarContainer {
+				position: relative;
+				pointer-events: all;
+
+				.ScoreBlip {
+					position: absolute;
+					top: -10px;
+					right: -10px;
+
+					width: 20px;
+					height: 20px;
+					border-radius: 100%;
+
+					background: linear-gradient(45deg, $primaryColor, $secondaryColor);
+
+					font-weight: bolder;
+					font-size: 0.8em;
+				}
+			}
+
+			.Username {
+				margin-left: 7px;
+				// opacity: 0;
+			}
+		}
+
+		.Question {
+			position: absolute;
+			top: 4vh;
+
+			font-size: 1.5em;
+			max-width: 50vw;
+			text-align: center;
+		}
+
+		.Status {
+			position: absolute;
+			top: 12vh;
+
+			font-size: 1.2em;
+			max-width: 50vw;
+			font-weight: 400;
+			text-align: center;
+		}
+
+		.GifVotes {
+			flex-wrap: wrap;	
+			gap: 20px;
+
+			padding: 0 15vw;
+
+			.GifContainer {
+				position: relative;
+				transition: opacity $t;
+
+				.UserContainer {
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					padding: 15px;
+					gap: 5px;
+
+					.Avatar {
+						width: 25px;
+						height: 25px;
+					}
+				}
+
+				&.Self {
+					.Gif {
+						cursor: not-allowed;
+						border-color: #ff778f;
+					}
+				}
+
+				&.Voted {
+					.Gif {
+						border-color: var(--secondary-color);
+					}
+				}
+
+				&.Loser {
+					opacity: 0.2;
+				}
+
+				&.Winner {
+					animation-name: WinnerAnimation;
+					animation-duration: 1.5s;
+
+					z-index: 10;
+
+					.Gif {
+						border-color: var(--primary-color);
+					}
+
+					@keyframes WinnerAnimation {
+						20% {
+							transform: scale(0.8);
+						}
+
+						75% {
+							transform: scale(1.4);
+						}
+
+						100% {
+							transform: none;
+						}
+					}
+				}
+
+				.VoteCount {
+					position: absolute;
+					top: -15px;
+					left: -15px;
+
+					width: 30px;
+					height: 30px;
+
+					border-radius: 7px;
+					background: linear-gradient(45deg, $primaryColor, $secondaryColor);
+
+					font-size: 1.15em;
+					font-weight: bolder;
+				}
+			}
+
+			.Gif {
+				max-width: 20vw;
+			}
+		}
+
+		.Gif {
+			border-radius: 7px;
+			border: 3px solid;
+			border-color: transparent;
+
+			transition: border-color $ft;
+			cursor: pointer;
+
+			&:hover {
+				border-color: white;
+			}
+		}
+	}
+}

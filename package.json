@@ -1,0 +1,42 @@
+{
+	"name": "gif-off",
+	"author": "Metalloriff",
+	"version": "0.0.1",
+	"siteProperties": {
+		"name": "gif-off.web.app",
+		"embedTitle": "GIF Off!",
+		"description": "Gif Off is an interactive game in which users are presented with a randomly selected question from a set of predefined packs. Players must select a GIF image from Tenor as the most suitable response to the question. Once all responses have been submitted, users vote on the best response, and are rewarded with points for each vote they receive.",
+		"color": "#7bb1bd"
+	},
+	"private": false,
+	"dependencies": {
+		"firebase": "^9.17.1",
+		"lodash": "^4.17.21",
+		"random-username-generator": "^1.0.4",
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2",
+		"react-feather": "^2.0.9",
+		"regenerator-runtime": "^0.13.9"
+	},
+	"devDependencies": {
+		"@svgr/webpack": "^5.5.0",
+		"@swc/cli": "^0.1.51",
+		"@swc/core": "^1.2.93",
+		"css-loader": "^6.3.0",
+		"file-loader": "^6.2.0",
+		"html-webpack-plugin": "^5.3.2",
+		"mini-css-extract-plugin": "^2.4.2",
+		"sass": "^1.42.1",
+		"sass-loader": "^12.1.0",
+		"style-loader": "^3.3.0",
+		"swc-loader": "^0.1.15",
+		"webpack": "^5.58.0",
+		"webpack-cli": "^4.9.0",
+		"webpack-dev-server": "^4.3.1",
+		"webpack-pwa-manifest": "^4.3.0"
+	},
+	"scripts": {
+		"start": "npx webpack serve --open",
+		"build": "npx webpack --mode production --env=mode=production"
+	}
+}

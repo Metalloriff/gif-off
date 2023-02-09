@@ -1,0 +1,116 @@
+@import "./Variables.scss";
+
+:root {
+	--primary-color: #e348db;
+	--secondary-color: #8663d5;
+
+	--primary-bg: var(--cf-bg0);
+	--secondary-bg: var(--cf-bg1);
+	--tertiary-bg: var(--cf-bg2);
+
+	--primary-border-radius: 0;
+	--secondary-border-radius: var(--cf-br1);
+	--text-color: var(--cf-txt0);
+
+	--darken-bg: rgba(0, 0, 0, 0.2);
+}
+
+html {
+	background-color: $primaryBG;
+	color: var(--text-color);
+
+	user-select: none;
+	overflow-x: hidden;
+}
+
+// Comment this and line 31-32 out for the Verdana font
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&display=swap");
+
+body {
+	font-family: var(--cf-font0);
+	font-family: Inter, Verdana, Geneva, Tahoma, sans-serif;
+	letter-spacing: 0.05ch;
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	margin: 0;
+}
+
+.App,
+.Main {
+	min-height: 100vh;
+}
+
+.App > .Background {
+	display: block;
+	width: 100vw;
+	height: 100vh;
+
+	position: fixed;
+	object-fit: cover;
+	object-position: center;
+
+	z-index: -10000;
+	filter: blur(5px);
+	transform: scale(1.1);
+}
+
+::-webkit-scrollbar {
+	background: rgba(black, 0.1);
+	width: 5px;
+	height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: $primaryColor;
+	border-radius: 10px;
+}
+
+a:not(.LinkWrapper) {
+	color: $primaryColor;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+// Some boilerplate stuff for the lazies.
+
+.Flex {
+	display: flex;
+}
+
+.Button {
+	background: linear-gradient(45deg, $primaryColor, $secondaryColor 80%);
+	border-radius: 100px;
+	padding: 12px 30px;
+	font-size: 1.25em;
+	font-weight: 200;
+
+	transform: none;
+	border: 2px solid;
+
+	cursor: pointer;
+	transition: transform $ft, color $ft;
+
+	text-align: center;
+
+	&:hover {
+		transform: scale(1.05);
+		color: white;
+	}
+}
+
+.FlexCenter {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.AbsoluteCover {
+	position: absolute;
+
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}

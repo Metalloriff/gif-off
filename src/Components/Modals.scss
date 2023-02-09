@@ -1,0 +1,310 @@
+@import "../Variables.scss";
+
+.BaseModal {
+	position: relative;
+
+	width: 800px;
+	max-width: 90vw;
+	height: 600px;
+	max-height: 90vh;
+
+	border-radius: $secondaryBorderRadius;
+	padding: 10px;
+
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.ModalStack {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+
+	z-index: 10000;
+
+	> .ModalContainer {
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		animation-name: ModalAttach;
+		animation-timing-function: steps(60);
+		animation-duration: 150ms;
+		animation-fill-mode: forwards;
+
+		&.Closing {
+			animation-name: ModalDetach;
+			animation-timing-function: steps(60);
+			animation-duration: 150ms;
+			animation-fill-mode: forwards;
+		}
+	}
+
+	will-change: background-color;
+	transition: background-color 150ms steps(40);
+	pointer-events: none;
+
+	&.Active {
+		background-color: rgba(black, 0.5);
+		pointer-events: all;
+	}
+}
+
+@keyframes ModalAttach {
+	0% {
+		transform: scale(1.1);
+		opacity: 0;
+	}
+
+	100% {
+		transform: none;
+		opacity: 1;
+	}
+}
+
+@keyframes ModalDetach {
+	0% {
+		transform: none;
+		opacity: 1;
+	}
+
+	100% {
+		transform: scale(1.1);
+		opacity: 0;
+	}
+}
+
+.ClipboardModal {
+	overflow: hidden;
+	color: white;
+	font-size: 1.5em;
+
+	padding: 20px;
+	border-radius: $primaryBorderRadius;
+
+	height: 30px;
+}
+
+.ImageModal {
+	width: 90vw;
+	height: 90vh;
+
+	display: flex;
+	flex-direction: column;
+
+	align-items: center;
+	justify-content: center;
+
+	.ImageContainer {
+		position: relative;
+		background-color: $primaryBG;
+
+		max-height: 80vh;
+
+		img {
+			max-width: 90vw;
+			height: 100%;
+
+			object-fit: contain;
+		}
+
+		video {
+			max-width: 90vw;
+			height: 100%;
+
+			object-fit: contain;
+			pointer-events: all;
+
+			z-index: 10;
+		}
+
+		&.Expanded {
+			height: 80vh;
+		}
+	}
+
+	.Footer {
+		display: flex;
+		margin-top: 25px;
+
+		align-items: center;
+		justify-content: center;
+
+		background-color: $primaryBG;
+		padding: 10px;
+
+		.Divider {
+			background-color: $primaryHover;
+
+			width: 2px;
+			height: 30px;
+
+			border-radius: 100px;
+
+			margin: 0 10px;
+		}
+
+		.Filename {
+			margin: 0 10px;
+		}
+
+		.Button {
+			padding: 5px 10px;
+
+			cursor: pointer;
+
+			&.Disabled {
+				opacity: 0.15;
+				cursor: not-allowed;
+			}
+		}
+	}
+}
+
+.BoolModal,
+.StringModal {
+	position: relative;
+
+	width: 500px;
+	max-width: 90vw;
+	height: max-content;
+
+	padding: 15px;
+	border-radius: $primaryBorderRadius;
+
+	display: flex;
+	flex-direction: column;
+
+	background-color: $primaryBG;
+
+	.Title {
+		font-weight: bolder;
+
+		font-size: 1.2em;
+		color: $primaryColor;
+	}
+
+	.Description {
+		margin-top: 20px;
+	}
+
+	.Field {
+		margin-top: 20px;
+
+		outline: none;
+		border: none;
+
+		padding: 10px;
+		margin-bottom: 5px;
+		border-radius: $primaryBorderRadius;
+
+		font-size: 1.1em;
+		flex-grow: 1;
+
+		white-space: pre-line;
+
+		background-color: var(--darken-bg);
+		color: white;
+	}
+
+	.ChatAutoCompleteContainer {
+		bottom: 125px !important;
+	}
+
+	.Footer {
+		display: flex;
+		flex-direction: row;
+
+		margin-top: 5px;
+
+		.Button {
+			background: $tertiaryBG;
+			color: white;
+			flex-grow: 1;
+
+			text-align: center;
+			border-radius: $primaryBorderRadius;
+
+			font-weight: bolder;
+			margin-top: 10px;
+			padding: 7px;
+
+			cursor: pointer;
+
+			&:first-child {
+				margin-right: 10px;
+			}
+			&:last-child {
+				margin-left: 10px;
+			}
+		}
+	}
+}
+
+.LoadingModal {
+	position: relative;
+
+	width: 250px;
+	height: 270px;
+	padding: 20px 0;
+
+	border-radius: $secondaryBorderRadius;
+
+	.LoadingCrescentContainer {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	.Title {
+		position: absolute;
+		left: 0;
+		bottom: 10px;
+		right: 0;
+
+		text-align: center;
+	}
+}
+
+.FullScreenModal {
+	position: relative;
+
+	width: 100vw;
+	height: 100vh;
+
+	background-color: $primaryBG;
+
+	> .Buttons {
+		position: fixed;
+		top: 15px;
+		right: 20px;
+
+		z-index: 20;
+
+		> .Button {
+			width: 30px;
+			height: 30px;
+			padding: 10px;
+			border-radius: 100%;
+
+			margin-left: 10px;
+
+			background-color: var(--darken-bg);
+			backdrop-filter: blur(20px);
+
+			cursor: pointer;
+
+			&:hover {
+				color: white;
+			}
+		}
+	}
+}

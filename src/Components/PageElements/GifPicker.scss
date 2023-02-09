@@ -1,0 +1,98 @@
+@import "../../Variables.scss";
+
+.GifPicker {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 50vh;
+
+	$primaryBG: rgba(black, 0.5);
+	backdrop-filter: blur(20px);
+
+	background: $primaryBG;
+	z-index: 10000;
+
+	transition: transform $t;
+
+	&:not(.Open) {
+		transform: translateY(50vh);
+	}
+
+	.SlideButton {
+		position: absolute;
+		left: 15px;
+		top: -30px;
+
+		width: 40px;
+		height: 30px;
+		background: $primaryBG;
+		border-radius: 7px 7px 0 0;
+		backdrop-filter: blur(20px);
+
+		cursor: pointer;
+		
+		> svg {
+			width: 35px;
+			height: 35px;
+		}
+	}
+
+	.SearchBarContainer {
+		margin-top: 20px;
+
+		.RandomButton {
+			border: none;
+			outline: none;
+
+			width: 35px;
+			height: 35px;
+			
+			margin-right: 5px;
+			cursor: pointer;
+		}
+
+		.SearchBar {
+			border: none;
+			outline: none;
+
+			background: rgba(white, 0.9);
+			color: black;
+
+			padding: 10px;
+			width: 50vw;
+			border-radius: 100px;
+		}
+	}
+
+	.Items {
+		overflow-x: hidden;
+		overflow-y: auto;
+		flex-wrap: wrap;
+
+		top: 60px;
+		gap: 20px;
+		padding: 20px;
+		padding-top: 10px;
+
+		.GifItemContainer {
+			height: 225px;
+
+			border-radius: 12px;
+			border: 3px solid transparent;
+
+			cursor: pointer;
+			transition: transform $ft, border-color $ft;
+
+			&:hover {
+				transform: scale(1.02);
+				border-color: white;
+			}
+
+			img {
+				height: 225px;
+				border-radius: 7px;
+			}
+		}
+	}
+}

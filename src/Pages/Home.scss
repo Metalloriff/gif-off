@@ -1,0 +1,82 @@
+@import "../Variables.scss";
+
+.HomePage {
+	display: flex;
+	flex-direction: column;
+}
+
+.Screen {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+
+	height: 100vh;
+
+	&.StartupScreen {
+		color: white;
+
+		.Avatar {
+			transform: translateX(-20px);
+			cursor: pointer;
+		}
+
+		.ProfileUsername {
+			flex-direction: column;
+			align-items: flex-start;
+
+			.Label {
+				margin-left: 12px;
+				margin-bottom: 7px;
+				font-weight: 500;
+			}
+		}		
+	}
+
+	.Avatar {
+		width: 70px;
+		height: 70px;
+		border-radius: 100%;
+	}
+
+	.Buttons {
+		flex-direction: column;
+		gap: 15px;
+
+		.Divider {
+			background: rgba(white, 0.5);
+			border-radius: 10px;
+			height: 2px;
+			width: 60%;
+			margin: 10px 0;
+		}
+
+		.InputContainer {
+			.Input {
+				outline: none;
+				color: var(--text-color);
+				background: rgba(black, 0.2);
+				backdrop-filter: blur(20px);
+				border-radius: 100px;
+				padding: 12px 30px;
+				font-size: 1em;
+				font-weight: 200;
+
+				transform: none;
+				border: 2px solid;
+
+				width: 50%;
+
+				text-align: center;
+
+				&::placeholder {
+					color: rgba(white, 0.3);
+				}
+			}
+		}
+
+		.Button {
+			width: 50%;
+		}
+	}
+}
