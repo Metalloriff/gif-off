@@ -4,12 +4,14 @@
 /node_modules
 /.pnp
 .pnp.js
+yarn.lock
 
 # testing
 /coverage
 
 # production
 /build
+/firebase-hosting
 
 # misc
 .DS_Store
