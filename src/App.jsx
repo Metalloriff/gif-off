@@ -1,5 +1,5 @@
-import randomUsernameGenerator from "random-username-generator";
 import { useState } from "react";
+import * as uug from "unique-username-generator";
 import "./App.scss";
 import background from "./Assets/background.jpg";
 import "./city-fog-theme.css";
@@ -51,7 +51,11 @@ if (!localUser) {
 	TenorClient.random("galaxy space aesthetic wallpaper").then(({ results: [pfp] }) => {
 		localUser = {
 			id: getRandomKey(),
-			username: randomUsernameGenerator.generate(),
+			username: uug.uniqueUsernameGenerator({
+				dictionaries: [uug.adjectives, uug.nouns, uug.adjectives, uug.nouns, uug.adjectives, uug.nouns],
+				separator: "",
+				style: "capital"
+			}),
 			avatar: pfp.media[0].tinygif.url
 		};
 

@@ -1,7 +1,8 @@
 import _ from "lodash";
 import { useCallback, useEffect, useState } from "react";
-import { ChevronsUp, Grid } from "react-feather";
+import { ChevronUp, Grid } from "react-feather";
 import { getRandomKey, joinClassNames } from "../../Classes/Constants";
+import RoomStore from "../../Classes/Stores/RoomStore";
 import TenorClient from "../../Classes/TenorClient";
 import Tooltip from "../Tooltip";
 import "./GifPicker.scss";
@@ -15,12 +16,12 @@ export default function GifPicker() {
 	const [open, setOpen] = useState(false);
 	const [pickingCallback, setPickingCallback] = useState(null);
 
-	useEffect(() => {
-		TenorClient.getTrending().then(({ results }) => (setTrending(results), setItems(results)));
+	const currentRoom = RoomStore.useState(() => RoomStore.getCurrentRoom());
+	const filters = RoomStore.useState(() => (RoomStore.getCurrentRoom()?.gifFilters ?? "") + " ");
 
+	useEffect(() => {
 		openGifPicker = async function () {
 			setOpen(true);
-
 
 			return new Promise(async (resolve, reject) => {
 				setPickingCallback({ resolve, reject });
@@ -28,16 +29,26 @@ export default function GifPicker() {
 		}
 	}, []);
 
+	useEffect(() => {
+		if (currentRoom && filters.length > 1) {
+			TenorClient.search(currentRoom.gifFilters).then(({ results }) => (setTrending(results), setItems(results)));
+		}
+		else {
+			TenorClient.getTrending().then(({ results }) => (setTrending(results), setItems(results)));
+			search("");
+		}
+	}, [filters]);
+
 	const makeRequest = useCallback(
 		_.debounce((query, prepend = []) => {
-			TenorClient.search(query).then(response => {
+			TenorClient.search((filters + query).trim()).then(response => {
 				setItems([
 					...prepend,
 					...response.results
 				]);
 			});
 		}, 200),
-		[]
+		[currentRoom]
 	);
 
 	useEffect(() => {
@@ -66,11 +77,11 @@ export default function GifPicker() {
 	return (
 		<div className={joinClassNames("GifPicker", [open, "Open"])}>
 			<div className="SlideButton FlexCenter" onClick={() => setOpen(!open)}>
-				<ChevronsUp />
+				<ChevronUp />
 			</div>
 
 			<div className="SearchBarContainer FlexCenter">
-				<div className="RandomButton FlexCenter" onClick={() => TenorClient.search(getRandomKey()).then(({ results }) => setItems(results))}>
+				<div className="RandomButton FlexCenter" onClick={() => TenorClient.search((filters + getRandomKey()).trim()).then(({ results }) => setItems(results))}>
 					<Grid />
 
 					<Tooltip>Random</Tooltip>

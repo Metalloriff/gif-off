@@ -13,6 +13,60 @@
 
 	height: 100vh;
 
+	.PacksList {
+		gap: 10px;
+
+		flex-wrap: wrap;
+		max-width: 400px;
+
+		.PackItem {
+			gap: 5px;
+			padding: 5px;
+
+			color: var(--text-color);
+			background: rgba(black, 0.2);
+			backdrop-filter: blur(20px);
+			border-radius: 100px;
+			padding: 5px;
+			font-weight: 500;
+			font-size: 0.8em;
+			text-transform: uppercase;
+
+			transform: none;
+			border: 2px solid;
+			cursor: pointer;
+
+			.Text {
+				margin-left: 10px;
+				margin-top: 2px;
+			}
+
+			transition: color $ft, border-color $ft;
+
+			&:hover {
+				color: #7fff7f;
+				border-color: #7fff7f;
+			}
+
+			&.AddItem {
+				&:hover {
+					color: #ff778f;
+					border-color: #ff778f;
+				}
+			}
+
+			.Tooltip {
+				color: black;
+				background: var(--text-color);
+				border-radius: 7px;
+			}
+
+			.TooltipArrow {
+				background: none;
+			}
+		}
+	}
+
 	&.StartupScreen {
 		color: white;
 
@@ -20,17 +74,6 @@
 			transform: translateX(-20px);
 			cursor: pointer;
 		}
-
-		.ProfileUsername {
-			flex-direction: column;
-			align-items: flex-start;
-
-			.Label {
-				margin-left: 12px;
-				margin-bottom: 7px;
-				font-weight: 500;
-			}
-		}		
 	}
 
 	.Avatar {
@@ -52,6 +95,16 @@
 		}
 
 		.InputContainer {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+
+			.Title {
+				margin-bottom: 7px;
+				font-weight: 500;
+			}
+
 			.Input {
 				outline: none;
 				color: var(--text-color);
@@ -65,7 +118,7 @@
 				transform: none;
 				border: 2px solid;
 
-				width: 50%;
+				width: 180px;
 
 				text-align: center;
 
@@ -76,7 +129,7 @@
 		}
 
 		.Button {
-			width: 50%;
+			width: 250px;
 		}
 	}
 }

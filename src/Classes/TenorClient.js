@@ -1,11 +1,11 @@
-﻿import { getRandomKey } from "./Constants";
+﻿import { localUser } from "../App";
 
 const endpoint = "https://g.tenor.com/v1";
 const key = "LXAB5RW7WVWA";
 const defaultProps = {
 	"media_filter": "minimal",
 	"limit": 50,
-	get "anon_id"() { return getRandomKey(); }
+	get "anon_id"() { return localUser?.id; }
 };
 
 let lastFetch = 0;

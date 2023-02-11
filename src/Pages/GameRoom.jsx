@@ -3,11 +3,35 @@ import { localUser } from "../App";
 import { ActionTypes, joinClassNames } from "../Classes/Constants";
 import { onDatabaseValue, onDisconnectedFromDatabase, overwriteToDatabase, writeToDatabase } from "../Classes/Database";
 import { dispatcher } from "../Classes/Dispatcher";
+import { useEventListener } from "../Classes/Hooks";
 import RoomStore, { Room, RoomStage } from "../Classes/Stores/RoomStore";
+import TenorClient from "../Classes/TenorClient";
 import { openGifPicker } from "../Components/PageElements/GifPicker";
+import Tooltip from "../Components/Tooltip";
 import "./GameRoom.scss";
 
+function NoGame() {
+	return (
+		<div className="Queue FlexCenter NoGame" style={{ padding: 20 }}>
+			<div className="AbsoluteCover FlexCenter" style={{
+				fontSize: "50vh",
+				opacity: 0.25
+			}}>💩</div>
+
+			<h1>Well, 💩.</h1>
+
+			<p>
+				The host closed the game, or something went wrong.<br />Might be my fault, might be yours. Either way, go away.
+			</p>
+		</div>
+	);
+}
+
 function Queue({ room }) {
+	if (!room?.users[room?.hostId]) {
+		return <NoGame />;
+	}
+
 	return (
 		<div className="Queue FlexCenter">
 			<div className="GameDetails FlexCenter">
@@ -80,6 +104,10 @@ function Game({ room }) {
 	const question = RoomStore.useState(() => RoomStore.getCurrentRoom().currentQuestion);
 	const forceUpdate = useReducer(x => x + 1, 0)[1];
 
+	useEventListener("beforeunload", e => {
+		return e.returnValue = confirm("WARNING: Pressing okay will end the current game. To keep playing, please press cancel.");
+	}, { target: window });
+
 	const selectGif = () => {
 		openGifPicker().then(item => {
 			const { url } = item.media[0].gif;
@@ -88,16 +116,29 @@ function Game({ room }) {
 		});
 	};
 
+	const startRound = async () => {
+		const question = room.getQuestion();
+
+		overwriteToDatabase({
+			gifs: {},
+			votes: {},
+			winner: null,
+			stage: RoomStage.PICK_GIF,
+			currentQuestion: question
+		}, "rooms", room.id);
+
+		for (const bot of Object.values(room.users).filter(user => user.bot)) {
+			const { url } = (await TenorClient.random((`"${room.gifFilters}" `).trim() + question)).results[0].media[0].gif;
+
+			writeToDatabase(url, "rooms", room.id, "gifs", bot.id);
+		}
+	};
+
 	useEffect(() => {
 		if (localUser.id === room.hostId) {
 			switch (room.stage) {
 				case RoomStage.PICK_GIF: {
-					overwriteToDatabase({
-						gifs: {},
-						votes: {},
-						winner: null,
-						currentQuestion: room.getQuestion()
-					}, "rooms", room.id);
+					startRound();
 				} break;
 			}
 		}
@@ -131,16 +172,7 @@ function Game({ room }) {
 			}
 
 			writeToDatabase(room.scores, "rooms", room.id, "scores");
-
-			setTimeout(() => {
-				overwriteToDatabase({
-					gifs: {},
-					votes: {},
-					winner: null,
-					stage: RoomStage.PICK_GIF,
-					currentQuestion: room.getQuestion()
-				}, "rooms", room.id);
-			}, 10 * 1000);
+			setTimeout(startRound, 10 * 1000);
 		}
 	}, [room.getWinner()]);
 
@@ -165,7 +197,7 @@ function Game({ room }) {
 					room.getPlayerWaitingForCount() > 0
 						? room.getPlayerWaitingForCount() > 1
 							? <>Waiting for {room.getPlayerWaitingForCount()} players...</>
-							: <>We're all waiting on you, {room.getLastAwaitedPlayer().username}.</>
+							: <>We're all waiting on you, {room.getLastAwaitedPlayer()?.username || "a dumb bot"}.</>
 						: "Vote for the best response"
 			}</h3>
 
@@ -179,11 +211,16 @@ function Game({ room }) {
 				room.stage === RoomStage.VOTE_GIF ? (
 					<div className="GifVotes FlexCenter">
 						{shuffledGifs.map(([userId, uri]) => (
-							<div className={joinClassNames("GifContainer", [userId === localUser.id, "Self"], [room.votes[userId] === userId, "Voted"], [Object.keys(room.votes).length === Object.keys(room.users).length, room.getWinner() === userId ? "Winner" : "Loser"])} key={userId} onClick={() => {
+							<div className={joinClassNames("GifContainer", [userId === localUser.id, "Self"], [room.votes[userId] === userId, "Voted"], [Object.keys(room.votes).length === Object.keys(room.users).length - room.botCount, room.getWinner() === userId ? "Winner" : "Loser"])} key={userId} onClick={() => {
 								if (userId !== localUser.id && !room.getWinner()) {
 									writeToDatabase(userId, "rooms", room.id, "votes", localUser.id);
 								}
 							}}>
+								{userId === localUser.id ? (
+									<Tooltip>
+										You can't vote on your own post!
+									</Tooltip>
+								) : null}
 								{room.getVoteCountForUser(userId) > 0 ? (
 									<div className="VoteCount FlexCenter">{room.getVoteCountForUser(userId)}</div>
 								) : null}

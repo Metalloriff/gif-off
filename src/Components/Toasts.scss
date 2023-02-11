@@ -66,15 +66,18 @@
 		
 		min-width: 200px;
 		
-		background-color: $tertiaryBG;
+		background:rgba(white, 0.6);
+		color: black;
 		text-align: center;
 		
 		box-shadow: 0 0 10px rgba(black, 0.5);
+		backdrop-filter: blur(20px);
+		border-radius: 3px;
 
 		animation: toast-open 500ms ease-in;
 		pointer-events: all;
 
-		&.Success { background-color: $primaryColor; }
+		// &.Success { background-color: $primaryColor; }
 		&.Warning { background-color: #ffd466; }
 		&.Failure { background-color: #ff6666; }
 

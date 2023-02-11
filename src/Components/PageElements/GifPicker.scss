@@ -17,24 +17,33 @@
 
 	&:not(.Open) {
 		transform: translateY(50vh);
+
+		.SlideButton > svg {
+			transform: none;
+		}
 	}
 
 	.SlideButton {
 		position: absolute;
 		left: 15px;
-		top: -30px;
+		top: -40px;
+		padding-bottom: 10px;
 
 		width: 40px;
 		height: 30px;
-		background: $primaryBG;
+		background: rgba(white, 0.1);
 		border-radius: 7px 7px 0 0;
 		backdrop-filter: blur(20px);
 
 		cursor: pointer;
 		
 		> svg {
+			margin-top: 12px;
 			width: 35px;
 			height: 35px;
+
+			transform: rotateZ(-180deg);
+			transition: transform $t;
 		}
 	}
 

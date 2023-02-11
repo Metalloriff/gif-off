@@ -34,6 +34,11 @@
 		.Users {
 			flex-direction: column;
 			gap: 15px;
+			max-height: 50vh;
+			padding: 20px;
+			overflow-y: auto;
+
+			justify-content: flex-start;
 
 			.UsersTitle {
 				padding: 10px 30px;
@@ -64,16 +69,12 @@
 			flex-direction: column;
 			pointer-events: none;
 
+			max-width: 220px;
+
 			.Items {
 				flex-direction: column;
 				align-items: flex-start;
 				gap: 20px;
-			}
-
-			&:hover {
-				.Username {
-					opacity: 1;
-				}
 			}
 
 			.AvatarContainer {
@@ -98,7 +99,10 @@
 
 			.Username {
 				margin-left: 7px;
-				// opacity: 0;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				white-space: nowrap;
+				max-width: 150px;
 			}
 		}
 
@@ -125,6 +129,7 @@
 			flex-wrap: wrap;	
 			gap: 20px;
 
+			margin-top: 20vh;
 			padding: 0 15vw;
 
 			.GifContainer {
@@ -145,6 +150,14 @@
 				}
 
 				&.Self {
+					.Tooltip {
+						background: #ff778f;
+						border-radius: 7px;
+					}
+					.TooltipArrow {
+						background: none;
+					}
+
 					.Gif {
 						cursor: not-allowed;
 						border-color: #ff778f;
@@ -223,7 +236,6 @@
 }
 
 .Mobile .GameRoom {
-
 	.Scoreboard {
 		top: 15px;
 		left: 15px;

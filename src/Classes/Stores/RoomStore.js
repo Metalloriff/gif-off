@@ -13,17 +13,18 @@ export const RoomStage = {
 	FINAL: 3
 };
 
+const usedQuestions = [];
 export class Room {
 	id;
 	hostId;
 	users = {};
-	guidelineTag = ""; // TODO add this
+	gifFilters = "";
 
 	packs = Object.keys(questionPacks);
-	usedQuestions = [];
+	botCount = 0;
 
 	getRandomPlayer() {
-		const players = Object.values(this.users);
+		const players = Object.values(this.users).filter(user => !user.bot);
 
 		return players[Math.floor(Math.random() * players.length)];
 	}
@@ -33,11 +34,11 @@ export class Room {
 		const validQuestions = Object.entries(questionPacks).filter(([key, value]) => this.packs.includes(key)).map(([key, value]) => value).flat();
 		let question;
 
-		while (!question || ~this.usedQuestions.indexOf(question)) {
+		while (!question || ~usedQuestions.indexOf(question)) {
 			question = validQuestions[Math.floor(Math.random() * validQuestions.length)];
 		}
 
-		this.usedQuestions.push(question);
+		usedQuestions.push(question);
 		return question.replace("XNAME", this.getRandomPlayer().username);
 	}
 
@@ -47,7 +48,7 @@ export class Room {
 
 	getLastAwaitedPlayer() {
 		for (const user of Object.values(this.users)) {
-			if (!this.gifs[user.id]) {
+			if (!this.gifs[user.id] && !user.bot) {
 				return user;
 			}
 		}
@@ -70,7 +71,7 @@ export class Room {
 	}
 
 	getWinner() {
-		if (Object.keys(this.votes).length !== Object.keys(this.users).length)
+		if (Object.keys(this.votes).length !== Object.keys(this.users).length - this.botCount)
 			return null;
 
 		const votes = this.getVoteCounts();

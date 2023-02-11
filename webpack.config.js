@@ -26,7 +26,8 @@ module.exports = env => ({
 		path: path.join(__dirname, "firebase-hosting"),
 		filename: "assets/scripts/[name].js",
 		chunkFilename: "assets/scripts/[name].js",
-		assetModuleFilename: "assets/media/[name][ext]"
+		assetModuleFilename: "assets/media/[name][ext]",
+		publicPath: "/"
 	},
 	module: {
 		rules: [
@@ -81,6 +82,10 @@ module.exports = env => ({
 		]
 	},
 	resolve: {
+		fallback: {
+			"crypto": require.resolve("crypto-browserify"),
+			"stream": require.resolve("stream-browserify")
+		},
 		extensions: [
 			".jsx",
 			".js",
