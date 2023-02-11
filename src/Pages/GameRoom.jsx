@@ -251,6 +251,18 @@ export default function GameRoom({ roomId }) {
 			while (!localUser)
 				await new Promise(r => setTimeout(r, 250));
 
+			while (!localUser.hasSetUsername || !localUser.username?.trim()) {
+				const username = prompt("Please pick a username to play.", localUser.username);
+
+				if (username) {
+					localUser.username = username;
+					localUser.hasSetUsername = true;
+
+					dispatcher.dispatch({ type: ActionTypes.UPDATE_USER });
+					localStorage.setItem("localUser", JSON.stringify(localUser));
+				}
+			}
+
 			writeToDatabase(localUser, "rooms", roomId, "users", localUser.id);
 		}
 

@@ -66,14 +66,6 @@ function StartupScreen() {
 			});
 
 			setBusy(false);
-		},
-		joinRoom: () => {
-			const id = document.getElementById("JoinRoomId").value;
-
-			dispatcher.dispatch({
-				type: ActionTypes.UPDATE_ROUTE,
-				path: "/game/" + id
-			});
 		}
 	};
 
@@ -113,6 +105,8 @@ function StartupScreen() {
 								<div className="Title">Username</div>
 								<input className="Input" placeholder="Username" defaultValue={localUser.username} maxLength={32} style={{ width: "80%" }} onBlur={e => {
 									localUser.username = e.currentTarget.value;
+									localUser.hasSetUsername = true;
+
 									localStorage.setItem("localUser", JSON.stringify(localUser));
 									dispatcher.dispatch({ type: ActionTypes.UPDATE_USER });
 								}} />
@@ -162,13 +156,6 @@ function StartupScreen() {
 				</div>
 
 				<div className="Button" onClick={actions.createRoom}>Create Room</div>
-
-				<div className="Divider" />
-
-				<div className="InputContainer FlexCenter">
-					<input id="JoinRoomId" className="Input" placeholder="Room ID" maxLength={7} />
-				</div>
-				<div className="Button" onClick={actions.joinRoom}>Join Room</div>
 			</div>
 		</div>
 	);

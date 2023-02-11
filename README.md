@@ -7,5 +7,4 @@ Please note that mobile support is not yet available. I am not responsible for a
 
 # TODO
 #### Add a low chance to request a question from a random player
-#### Add tag guidelines - This will force whatever tag guidelines the host decides to be inserted into every gif search the user does.
 #### Add timers

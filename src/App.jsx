@@ -56,7 +56,8 @@ if (!localUser) {
 				separator: "",
 				style: "capital"
 			}),
-			avatar: pfp.media[0].tinygif.url
+			avatar: pfp.media[0].tinygif.url,
+			hasSetUsername: false
 		};
 
 		dispatcher.dispatch({ type: ActionTypes.UPDATE_USER });

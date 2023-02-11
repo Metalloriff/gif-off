@@ -1,5 +1,4 @@
-﻿import React from "react";
-import * as Feather from "react-feather";
+﻿import * as Feather from "react-feather";
 import Icon from "../../Assets/icon50x50.png";
 import Heart from "../../Assets/TwemojiHeart.svg";
 import { copyToClipboard } from "../Modals";
@@ -10,7 +9,7 @@ export default function PageFooter() {
 	const contacts = {
 		website: () => window.open("https://kinzoku.one/", "_blank"),
 		github: () => window.open("https://github.com/metalloriff", "_blank"),
-		twitter: () => window.open("https://twitter.com/Metalloriff", "_blank"),
+		telegram: () => window.open("https://t.me/Metalloriff", "_blank"),
 		email: () => window.open("mailto:metalloriff@gmail.com", "_blank"),
 		discord: () => copyToClipboard("Metalloriff 💕🌈#2891")
 	};
@@ -41,14 +40,14 @@ export default function PageFooter() {
 							<Tooltip>GitHub</Tooltip>
 						</div>
 
-						<div className="ContactEntry" onClick={contacts.twitter}>
-							<Feather.Twitter />
-							<Tooltip>Twitter</Tooltip>
-						</div>
-
 						<div className="ContactEntry" onClick={contacts.email}>
 							<Feather.Mail />
 							<Tooltip>Email</Tooltip>
+						</div>
+
+						<div className="ContactEntry" onClick={contacts.twitter}>
+							<Feather.Send />
+							<Tooltip>Telegram</Tooltip>
 						</div>
 
 						<div className="ContactEntry" onClick={contacts.discord}>
